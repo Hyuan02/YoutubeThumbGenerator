@@ -11,20 +11,16 @@ function App() {
   const [templates, setTemplates] = useState([]);
 
   useEffect(() => {
-    unsplash.search.getPhotos({
-      query: 'a',
-      page: 1,
-      perPage: 20
-    }).then(x => {
-      console.log(x.response.results);
+    unsplash.photos.list({ page: 1, perPage: 20 }).then(x => {
       setTemplates(x.response.results)
-    });
+    })
   }, [])
 
 
 
   return (
     <div style={{ textAlign: "center" }} className='App'>
+      <h3>Select an Image</h3>
       {
         templates.map((template) => {
           return <img style={{ width: '200px' }} key={template.id} src={template.urls.small} alt={template.alt} />
