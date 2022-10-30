@@ -8,23 +8,28 @@ const unsplash = createApi({
 });
 
 function App() {
-  const [first, setfirst] = useState([]);
+  const [templates, setTemplates] = useState([]);
 
   useEffect(() => {
-    console.log(unsplash.search.getPhotos({
+    unsplash.search.getPhotos({
       query: 'a',
       page: 1,
       perPage: 20
     }).then(x => {
-      console.log(x.response)
-    }))
-  })
+      console.log(x.response.results);
+      setTemplates(x.response.results)
+    });
+  }, [])
 
 
 
   return (
-    <div className='App'>
-      Hello World!
+    <div style={{ textAlign: "center" }} className='App'>
+      {
+        templates.map((template) => {
+          return <img style={{ width: '200px' }} key={template.id} src={template.urls.small} alt={template.alt} />
+        })
+      }
     </div>
   );
 }
